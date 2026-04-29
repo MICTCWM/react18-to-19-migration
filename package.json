@@ -4,8 +4,13 @@
   "description": "One-click migration workflow from React 18 to React 19",
   "main": "workflow.yaml",
   "scripts": {
-    "test": "npx codemod@latest -w . -t ./tests/fixtures/sample-react18-app",
-    "migrate": "npx codemod@latest -w ."
+    "test:simple": "powershell -File ./scripts/migrate.ps1 -Target ./tests/fixtures/sample-react18-app/src",
+    "test:realistic": "powershell -File ./scripts/migrate.ps1 -Target ./tests/fixtures/realistic-react18-app/src",
+    "migrate": "powershell -File ./scripts/migrate.ps1",
+    "migrate:render": "npx codemod@latest run react/19/replace-reactdom-render -t ./src --no-interactive --allow-dirty",
+    "migrate:default-props": "npx codemod@latest jssg run scripts/codemods/replace-default-props.ts --language tsx -t ./src --no-interactive --allow-dirty",
+    "migrate:forward-ref": "npx codemod@latest jssg run scripts/codemods/remove-forward-ref.ts --language tsx -t ./src --no-interactive --allow-dirty",
+    "migrate:context-type": "npx codemod@latest jssg run scripts/codemods/replace-context-type.ts --language tsx -t ./src --no-interactive --allow-dirty"
   },
   "keywords": ["react", "react-19", "migration", "codemod"],
   "author": "MICTCWM <>",

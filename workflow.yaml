@@ -1,0 +1,66 @@
+version: "1"
+
+nodes:
+  - id: react-18-to-19-migration
+    name: Migrate React 18 to React 19
+    type: automatic
+    steps:
+      # 1) Replace ReactDOM.render() with createRoot().render()
+      - name: "Replace ReactDOM.render with createRoot"
+        run: npx codemod@latest run react/19/replace-reactdom-render --no-interactive --allow-dirty || true
+
+      # 2) Replace string refs with callback refs
+      - name: "Replace string refs with callback refs"
+        run: npx codemod@latest run react/19/replace-string-ref --no-interactive --allow-dirty || true
+
+      # 3) Replace TestUtils.act() with React.act()
+      - name: "Replace TestUtils.act with React.act"
+        run: npx codemod@latest run react/19/replace-act-import --no-interactive --allow-dirty || true
+
+      # 4) Replace deprecated defaultProps with default parameters
+      - name: "Replace defaultProps with default parameters"
+        js-ast-grep:
+          js_file: "scripts/codemods/replace-default-props.ts"
+          language: "tsx"
+          include:
+            - "src/**/*.{ts,tsx}"
+            - "**/*.{ts,tsx}"
+
+      # 5) Replace class components contextType with useContext
+      - name: "Replace class contextType with useContext"
+        js-ast-grep:
+          js_file: "scripts/codemods/replace-context-type.ts"
+          language: "tsx"
+          include:
+            - "src/**/*.{ts,tsx}"
+            - "**/*.{ts,tsx}"
+
+      # 6) Remove forwardRef (React 19 supports ref as prop)
+      - name: "Remove forwardRef wrapper"
+        js-ast-grep:
+          js_file: "scripts/codemods/remove-forward-ref.ts"
+          language: "tsx"
+          include:
+            - "src/**/*.{ts,tsx}"
+            - "**/*.{ts,tsx}"
+
+      # 7) AI step for complex edge cases
+      - name: "AI fixups for remaining edge cases"
+        ai:
+          prompt: |
+            You are performing a React 18 to React 19 migration. Modify files directly.
+
+            Handle these hard cases:
+            1) Legacy context API (this.context) → useContext hook
+            2) findDOMNode() → refs or alternative patterns
+            3) Legacy string refs in class components that weren't caught
+            4) react-dom/server renderToString changes
+
+            Constraints:
+            - Keep formatting roughly intact (prettier will run later).
+            - If unsure about a transformation, add a TODO comment explaining why.
+            - Do NOT modify imports that are already correct.
+
+      # 8) Format code after all transformations
+      - name: "Format code"
+        run: npx prettier --write "src/**/*.{ts,tsx,js,jsx}" 2>/dev/null || true

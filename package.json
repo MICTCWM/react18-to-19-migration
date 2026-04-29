@@ -1,0 +1,17 @@
+{
+  "name": "@MICTCWM/react-18-to-19-migration",
+  "version": "1.0.0",
+  "description": "One-click migration workflow from React 18 to React 19",
+  "main": "workflow.yaml",
+  "scripts": {
+    "test": "npx codemod@latest -w . -t ./tests/fixtures/sample-react18-app",
+    "migrate": "npx codemod@latest -w ."
+  },
+  "keywords": ["react", "react-19", "migration", "codemod"],
+  "author": "MICTCWM <>",
+  "license": "MIT",
+  "devDependencies": {
+    "codemod": "latest",
+    "prettier": "^3.0.0"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": "1",
+  "harness": "opencode",
+  "scope": "project",
+  "components": [
+    {
+      "id": "command:codemod",
+      "kind": "command",
+      "path": "F:\\code\\dorahacks\\react18-to-19-migration\\.opencode/commands\\codemod.md",
+      "version": "1.9.0",
+      "fingerprint": "a79ace91ec07bfecd03648bb12e34254b738126588eb78ec959b64dbc674ae6f"
+    },
+    {
+      "id": "discovery-guide:AGENTS.md",
+      "kind": "discovery_guide",
+      "path": "F:\\code\\dorahacks\\react18-to-19-migration\\AGENTS.md",
+      "version": null,
+      "fingerprint": "f07b7704898bc9979e7c81b1df4a340b39f1e6ddb09a6b98f027ba25315750af"
+    },
+    {
+      "id": "periodic-trigger:check-updates.sh",
+      "kind": "discovery_guide",
+      "path": "F:\\code\\dorahacks\\react18-to-19-migration\\.opencode\\codemod/periodic-update\\check-updates.sh",
+      "version": null,
+      "fingerprint": "fb8e261b3cac5444878f7226fa3bdeeeaa95fa1b48936c01984fd1ccbd7b7b6c"
+    },
+    {
+      "id": "periodic-trigger:codemod-periodic-update.js",
+      "kind": "discovery_guide",
+      "path": "F:\\code\\dorahacks\\react18-to-19-migration\\.opencode\\plugins\\codemod-periodic-update.js",
+      "version": null,
+      "fingerprint": "a24b1f296c3ad5afcd4e74fee787f05229e683d1b4254b838999e7affe002b00"
+    },
+    {
+      "id": "codemod-mcp",
+      "kind": "mcp_config",
+      "path": "F:\\code\\dorahacks\\react18-to-19-migration\\opencode.json",
+      "version": null,
+      "fingerprint": "af0123f9fc264500e2a2f843c60df3fecc12b4870fc02f59707f2c98e9e5a290"
+    },
+    {
+      "id": "codemod",
+      "kind": "skill",
+      "path": "F:\\code\\dorahacks\\react18-to-19-migration\\.opencode/skills\\codemod\\SKILL.md",
+      "version": "1.0.0",
+      "fingerprint": "34b0fcb8c4c1f78122a0eaf5e1c8bffea08e798b100b933463cf295ade34ea33"
+    }
+  ]
+}

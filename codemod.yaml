@@ -1,0 +1,27 @@
+schema_version: "1.0"
+
+name: "@MICTCWM/react-18-to-19-migration"
+version: "1.0.0"
+description: "One-click migration workflow from React 18 to React 19 — combines registry codemods, custom transforms, and AI fixups"
+author: "MICTCWM <>"
+license: "MIT"
+workflow: "workflow.yaml"
+category: "migration"
+
+targets:
+  languages: ["typescript", "javascript"]
+
+keywords:
+  - "react"
+  - "react-19"
+  - "migration"
+  - "upgrade"
+  - "breaking-change"
+  - "v18-to-v19"
+
+registry:
+  access: "public"
+  visibility: "public"
+
+capabilities:
+  - fs

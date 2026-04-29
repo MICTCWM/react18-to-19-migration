@@ -104,7 +104,7 @@ Tested on `realistic-react18-app` fixture:
 
 ## Author
 
-MICTCWM - [GitHub](https://github.com/MICTCWM)
+MICTCWM - [GitHub](https://github.com/MICTCWM/react18-to-19-migration)
 
 ## License
 

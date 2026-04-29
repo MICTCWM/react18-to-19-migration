@@ -1,25 +1,22 @@
+import { createRoot } from "react-dom/client";
 import React, { forwardRef, Component, useState } from 'react';
 import ReactDOM from 'react-dom';
 import ThemeContext from './ThemeContext';
 
 // ============ Pattern 1: forwardRef ============
 // React 19: ref is a regular prop, no need for forwardRef
-const CustomInput = forwardRef<HTMLInputElement, { label: string }>(
-  (props, ref) => {
+const CustomInput = (props, ref) => {
     return (
       <div>
         <label>{props.label}</label>
         <input ref={ref} type="text" />
       </div>
     );
-  }
-);
+  };
 
-const CustomButton = forwardRef<HTMLButtonElement, { children: React.ReactNode }>(
-  (props, ref) => {
+const CustomButton = (props, ref) => {
     return <button ref={ref}>{props.children}</button>;
-  }
-);
+  };
 
 // ============ Pattern 2: defaultProps ============
 // React 19: defaultProps removed for function components
@@ -32,12 +29,12 @@ function UserCard({ name, role, avatar }: { name: string; role: string; avatar: 
     </div>
   );
 }
-UserCard.defaultProps = { name: 'Guest', role: 'Viewer', avatar: '/default.png' };
+// TODO: React 19 - Add default parameters to UserCard: name = 'Guest', role = 'Viewer', avatar = '/default.png';
 
 function Message({ text, type }: { text: string; type: string }) {
   return <div className={`message message-${type}`}>{text}</div>;
 }
-Message.defaultProps = { type: 'info' };
+// TODO: React 19 - Add default parameters to Message: type = 'info';
 
 // ============ Pattern 3: Class with contextType ============
 // React 19: prefer useContext hook
@@ -45,7 +42,7 @@ class ThemedSection extends Component {
   static contextType = ThemeContext;
 
   render() {
-    const theme = this.context;
+    const theme = /* useContext(ThemeContext) */ this.context;
     return (
       <div style={{ color: theme.foreground, background: theme.background }}>
         <h2>Themed Content</h2>
@@ -94,5 +91,6 @@ export default App;
 // Entry point using legacy ReactDOM.render
 const rootElement = document.getElementById('root');
 if (rootElement) {
-  ReactDOM.render(<App />, rootElement);
+  const root = createRoot(rootElement);
+  root.render(<App />);
 }

@@ -17,40 +17,25 @@ import type TSX from "codemod:ast-grep/langs/tsx";
 const codemod: Codemod<TSX> = (root) => {
   const rootNode = root.root();
 
-  // Find this.context references and annotate them
+  // Find this.context references
   const thisContextRefs = rootNode.findAll({
     rule: { pattern: "this.context" },
   });
 
-  // Find contextType assignments (both static and non-static)
-  const contextTypeStatic = rootNode.findAll({
-    rule: { pattern: "contextType = $CONTEXT" },
-  });
-
-  if (contextTypeStatic.length === 0 && thisContextRefs.length === 0) {
+  if (thisContextRefs.length === 0) {
     return null;
   }
 
+  // Extract context name from source text (since AST pattern matching
+  // doesn't easily match class field definitions with 'static' keyword)
+  const sourceText = rootNode.text();
+  const contextTypeMatch = sourceText.match(/static\s+contextType\s*=\s*(\w+)/);
+  const contextName = contextTypeMatch ? contextTypeMatch[1] : "Context";
+
   const edits: any[] = [];
 
-  // Collect all context names first
-  const contextNames: string[] = [];
-  for (const usage of contextTypeStatic) {
-    const contextName = usage.getMatch("CONTEXT")?.text();
-    if (contextName) {
-      contextNames.push(contextName);
-      // Replace contextType assignment with a TODO comment
-      edits.push(
-        usage.replace(
-          `contextType = ${contextName} // TODO: React 19 - Convert to function component with useContext(${contextName})`
-        )
-      );
-    }
-  }
-
-  // Annotate this.context references
+  // Annotate this.context references with the context name
   for (const ref of thisContextRefs) {
-    const contextName = contextNames.length > 0 ? contextNames[0] : "Context";
     edits.push(ref.replace(`/* useContext(${contextName}) */ this.context`));
   }
 
